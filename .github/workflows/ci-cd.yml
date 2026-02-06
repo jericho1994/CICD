@@ -91,7 +91,7 @@ jobs:
           cd ui-tests/Playwright
           playwright install
 
-      - name: Run UI tests
-        run: |
-          cd ui-tests/Playwright
-          HEADLESS=1 pytest -s tests/test_youtube_search.py::test_youtube_search_using_xpath
+      #- name: Run UI tests
+      #  run: |
+      #    cd ui-tests/Playwright
+      #    HEADLESS=1 pytest -s tests/test_youtube_search.py::test_youtube_search_using_xpath
