@@ -37,16 +37,38 @@ jobs:
       - name: Push Docker image
         run: docker push jericho1994/echo-cicd:latest
 
-      - name: Simulate deployment
+      - name: Simulate deployment (This is where deployment)
         run: |
           echo "Pulling Docker image"
           echo "Stopping container"
           echo "Starting container"
 
-      - name: Echo SUCCESS
+      - name: Checkout UI tests repo
+        uses: actions/checkout@v4
+        with:
+          repository: jericho1994/Playwright-Test
+          token: ${{ secrets.MYTOKEN }}
+          path: ui-tests
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.14'
+
+      - name: Install UI test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest-playwright
+
+      - name: Run UI tests
+        run: |
+          cd ui-tests
+          pytest -s tests\test_youtube_search.py::test_youtube_search_using_xpath
+
+      - name: Notification (can be send to slack, smtp or other webhooks)
         if: success()
         run: echo "success"
 
-      - name: Echo FAILED
+      - name: Notification failed
         if: failure()
         run: echo "failed"
