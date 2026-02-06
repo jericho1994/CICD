@@ -1,0 +1,14 @@
+{
+  "name": "cicd-practice",
+  "version": "1.0.0",
+  "description": "CI/CD GitHub Actions practice",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Jericho",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.0.0"
+  }
+}
