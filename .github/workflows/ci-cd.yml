@@ -43,10 +43,10 @@ jobs:
         echo "Stopping container"
         echo "Starting container"
 
-    - name: Notify Slack on failure
+    - name: Echo SUCCESS
+      if: success()
+      run: echo "success"
+
+    - name: Echo FAILED
       if: failure()
-      uses: slackapi/slack-github-action@v1.23.0
-      with:
-        payload: '{"text":"Deployment failed!"}'
-        channel: '#ci-cd-notifications'
-        webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: echo "failed"

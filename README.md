@@ -1,5 +1,5 @@
 ### Deploy to Server
-*   - name: Deploy to staging
+*   - name: Deploy to staging  
       uses: appleboy/ssh-action@v0.1.6
       with:
         host: ${{ secrets.STAGING_SERVER_SSH }}
