@@ -62,8 +62,8 @@ jobs:
 
       - name: Run UI tests
         run: |
-          cd ui-tests\Playwright
-          pytest -s tests\test_youtube_search.py::test_youtube_search_using_xpath
+          cd ui-tests/Playwright
+          pytest -s tests/test_youtube_search.py::test_youtube_search_using_xpath
 
       - name: Notification (can be send to slack, smtp or other webhooks)
         if: success()
