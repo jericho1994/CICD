@@ -1,0 +1,52 @@
+name: Echo CI/CD Pipeline
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build-and-text:
+    runs-on: ubuntu-latest
+
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run unit tests
+      run: npm test
+
+    - name: Build Docker image
+      run: docker build -t jericho1994/echo-cicd:latest .
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Push Docker image
+      run: docker push jericho1994/echo-cicd:latest
+
+    - name: Simulate deployment
+      run: |
+        echo "Pulling Docker image"
+        echo "Stopping container"
+        echo "Starting container"
+
+    - name: Notify Slack on failure
+      if: failure()
+      uses: slackapi/slack-github-action@v1.23.0
+      with:
+        payload: '{"text":"Deployment failed!"}'
+        channel: '#ci-cd-notifications'
+        webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
